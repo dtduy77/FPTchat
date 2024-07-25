@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./App.css";
+import "@fortawesome/fontawesome-free/css/all.min.css";
 
 function App() {
   const [inputValue, setInputValue] = useState("");
@@ -41,20 +42,17 @@ function App() {
             Học phí các chuyên ngành năm 2024
           </button>
         </div>
+
         <div className="input-container">
           <input
             type="text"
             placeholder="Nhập tin nhắn"
             className="input-field"
-            value={inputValue}
-            onChange={handleInputChange}
-            onKeyPress={handleKeyPress}
           />
           <img
             src="src/assets/input.png"
             alt="send icon"
             className="send-icon"
-            onClick={handleSendClick}
           />
         </div>
       </main>
