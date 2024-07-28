@@ -26,7 +26,7 @@ function App() {
 
     setQuestion(inputValue);
 
-    if (selectedFile) {
+    if (selectedFile || question) {
       const formData = new FormData();
       formData.append("doc", selectedFile);
       formData.append("question", inputValue);
@@ -48,7 +48,7 @@ function App() {
       }
 
       setInputValue(""); // Clear the input field after sending
-      setSelectedFile(null); // Clear the file input after sending
+      // We do not clear the selectedFile so it can be reused
     } else {
       console.log("Input value:", inputValue);
       // setResponseData(inputValue); // Display input value if no file is uploaded
