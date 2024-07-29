@@ -26,32 +26,50 @@ function App() {
 
     setQuestion(inputValue);
 
-    if (selectedFile || question) {
+    if (selectedFile) {
       const formData = new FormData();
       formData.append("doc", selectedFile);
-      formData.append("question", inputValue);
 
       try {
         const response = await fetch(
-          "http://localhost:8000/api/v1/rag/upload",
+          "http://localhost:8000/api/v1/vectorstore/ingest",
           {
             method: "POST",
             body: formData,
           }
         );
         const data = await response.json();
-        console.log("Response:", data);
-        setResponseData(data.data); // Store the response data
+        console.log("Document Ingest Response:", data);
+        // Proceed with the query only after the document is ingested
+        await sendQuery(inputValue);
       } catch (error) {
-        console.error("Error:", error);
+        console.error("Error ingesting document:", error);
         // Handle the error
       }
 
       setInputValue(""); // Clear the input field after sending
-      // We do not clear the selectedFile so it can be reused
+      setSelectedFile(null); // Clear the file input after sending
     } else {
-      console.log("Input value:", inputValue);
-      // setResponseData(inputValue); // Display input value if no file is uploaded
+      await sendQuery(inputValue);
+    }
+  };
+
+  const sendQuery = async (query) => {
+    try {
+      const response = await fetch(
+        `http://localhost:8000/api/v1/vectorstore/retrieve?query=${encodeURIComponent(
+          query
+        )}`,
+        {
+          method: "GET",
+        }
+      );
+      const data = await response.json();
+      console.log("Query Response:", data);
+      setResponseData(data.data); // Store the response data
+    } catch (error) {
+      console.error("Error retrieving data:", error);
+      // Handle the error
     }
   };
 
@@ -61,10 +79,27 @@ function App() {
     }
   };
 
-  const handleButtonClick = (event) => {
+  const handleButtonClick = async (event) => {
     const buttonText = event.target.textContent;
     console.log("Button text:", buttonText);
-    // Additional logic for handling the button text
+    setQuestion(buttonText);
+
+    try {
+      const response = await fetch(
+        `http://localhost:8000/api/v1/vectorstore/retrieve?query=${encodeURIComponent(
+          buttonText
+        )}`,
+        {
+          method: "GET",
+        }
+      );
+      const data = await response.json();
+      console.log("Button Query Response:", data);
+      setResponseData(data.data); // Store the response data
+    } catch (error) {
+      console.error("Error retrieving data:", error);
+      // Handle the error
+    }
   };
 
   return (
