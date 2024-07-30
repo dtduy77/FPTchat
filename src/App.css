@@ -65,7 +65,7 @@ h1 {
 
 /* Main Styles */
 .App-main {
-  margin-top: 10%;
+  margin-top: 5%;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -82,20 +82,36 @@ h1 {
   padding-bottom: 250px;
 }
 
+.App-main .chat-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 50px;
+  border-radius: 20px;
+  margin-bottom: 50px;
+}
+
 .App-main .question-container {
   color: #000000;
   font-size: 25px;
-  margin-left: 800px;
-  padding-bottom: 20px;
+  margin-left: 900px;
+  padding-bottom: 10px;
 }
 
 .App-main .response-container {
   color: #000000;
   font-size: 25px;
+  margin-left: 200px;
   margin-right: 500px;
-  padding-bottom: 100px;
 }
 
+.bottom-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 .button-container {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -194,4 +210,50 @@ h1 {
 .sidebar-icon {
   font-size: 45px; /* Kích thước của biểu tượng */
   color: #4a4a4a; /* Màu sắc của biểu tượng, bạn có thể thay đổi theo ý thích */
+}
+
+/* Conversation History */
+.conversation-history {
+  width: 100%;
+  padding: 10px;
+}
+
+.conversation-summary {
+  padding: 10px;
+  background-color: #e6e6e6;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.conversation-summary:hover {
+  background-color: #ccc;
+}
+
+.history-details {
+  max-height: 400px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: #fff;
+}
+
+.conversation-entry {
+  margin-bottom: 10px;
+}
+
+.conversation-time {
+  font-size: 12px;
+  color: #888;
+}
+
+.conversation-question,
+.conversation-response {
+  font-size: 14px;
+  margin: 5px 0;
 }
