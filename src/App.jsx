@@ -37,7 +37,7 @@ function App() {
 
       try {
         const response = await fetch(
-          "http://localhost:8000/api/v1/vectorstore/ingest",
+          "https://duythduong-fpt-chat.hf.space/api/v1/vectorstore/ingest",
           {
             method: "POST",
             body: formData,
