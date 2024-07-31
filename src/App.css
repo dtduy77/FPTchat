@@ -106,12 +106,15 @@ h1 {
   margin-right: 500px;
 }
 
+/* Bottom Container */
 .bottom-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
+
+/* Button Container */
 .button-container {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -138,6 +141,7 @@ h1 {
   background-color: #e6e6e6;
 }
 
+/* Input Container */
 .input-container {
   position: relative;
   width: 80%;
@@ -256,4 +260,38 @@ h1 {
 .conversation-response {
   font-size: 14px;
   margin: 5px 0;
+}
+
+/* Upload Status Notification */
+.upload-status {
+  display: inline-block;
+  background-color: #e0f7fa;
+  border: 1px solid #00838f;
+  color: #006064;
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin: 20px auto; /* Centered horizontally with space from other elements */
+  text-align: center;
+  font-weight: bold;
+  position: relative; /* Changed from fixed to relative */
+  z-index: 999;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.upload-status.uploading {
+  background-color: #fff3e0;
+  border-color: #ff9800;
+  color: #e65100;
+}
+
+.upload-status.success {
+  background-color: #e8f5e9;
+  border-color: #66bb6a;
+  color: #2e7d32;
+}
+
+.upload-status.error {
+  background-color: #ffebee;
+  border-color: #e57373;
+  color: #c62828;
 }

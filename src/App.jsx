@@ -10,6 +10,8 @@ function App() {
   const [conversationHistory, setConversationHistory] = useState([]);
   const [startTime, setStartTime] = useState(null);
   const [showHistory, setShowHistory] = useState(false);
+  const [uploadStatus, setUploadStatus] = useState(null);
+  const [uploadMessage, setUploadMessage] = useState("");
 
   useEffect(() => {
     if (conversationHistory.length === 0) {
@@ -21,10 +23,49 @@ function App() {
     setInputValue(event.target.value);
   };
 
-  const handleFileChange = (event) => {
-    setSelectedFile(event.target.files[0]);
-    // Reset file input value
-    event.target.value = null;
+  const handleFileChange = async (event) => {
+    const file = event.target.files[0];
+    setSelectedFile(file);
+    event.target.value = null; // Reset file input value
+
+    if (file) {
+      const formData = new FormData();
+      formData.append("doc", file);
+
+      setUploadStatus("uploading");
+      setUploadMessage("Đang tải lên...");
+
+      try {
+        const response = await fetch(
+          "http://localhost:8000/api/v1/vectorstore/ingest",
+          {
+            method: "POST",
+            body: formData,
+          }
+        );
+        const data = await response.json();
+        console.log("Document Ingest Response:", data);
+
+        setUploadStatus("success");
+        setUploadMessage("Tải lên thành công!");
+        setTimeout(() => {
+          setUploadStatus(null);
+          setUploadMessage("");
+        }, 4000);
+
+        // Clear the file input after sending
+        setSelectedFile(null);
+      } catch (error) {
+        console.error("Error ingesting document:", error);
+
+        setUploadStatus("error");
+        setUploadMessage("Upload failed. Please try again.");
+        setTimeout(() => {
+          setUploadStatus(null);
+          setUploadMessage("");
+        }, 4000);
+      }
+    }
   };
 
   const handleSendClick = async () => {
@@ -37,31 +78,7 @@ function App() {
     setQuestion(currentQuestion);
     setInputValue(""); // Clear the input field immediately
 
-    if (selectedFile) {
-      const formData = new FormData();
-      formData.append("doc", selectedFile);
-
-      try {
-        const response = await fetch(
-          "https://duythduong-fpt-chat.hf.space/api/v1/vectorstore/ingest",
-          {
-            method: "POST",
-            body: formData,
-          }
-        );
-        const data = await response.json();
-        console.log("Document Ingest Response:", data);
-        // Proceed with the query only after the document is ingested
-        await sendQuery(currentQuestion);
-      } catch (error) {
-        console.error("Error ingesting document:", error);
-        // Handle the error
-      }
-
-      setSelectedFile(null); // Clear the file input after sending
-    } else {
-      await sendQuery(currentQuestion);
-    }
+    await sendQuery(currentQuestion);
   };
 
   const sendQuery = async (query) => {
@@ -209,8 +226,12 @@ function App() {
                 </div>
               )}
             </div>
+            {uploadStatus && (
+              <div className={`upload-status ${uploadStatus}`}>
+                {uploadMessage}
+              </div>
+            )}
           </div>
-
           <div className="bottom-container">
             <div className="button-container">
               <button className="query-btn" onClick={handleButtonClick}>
