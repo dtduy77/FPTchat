@@ -84,7 +84,7 @@ function App() {
   const sendQuery = async (query) => {
     try {
       const response = await fetch(
-        `https://duythduong-fpt-chat.hf.space/api/v1/vectorstore/retrieve?query=${encodeURIComponent(
+        `http://localhost:8000/api/v1/vectorstore/retrieve?query=${encodeURIComponent(
           query
         )}`,
         {
@@ -114,7 +114,7 @@ function App() {
 
     try {
       const response = await fetch(
-        `https://duythduong-fpt-chat.hf.space/api/v1/vectorstore/retrieve?query=${encodeURIComponent(
+        `http://localhost:8000/api/v1/vectorstore/retrieve?query=${encodeURIComponent(
           buttonText
         )}`,
         {
@@ -199,7 +199,7 @@ function App() {
           <header className="App-header">
             <div className="logo-container">
               <img
-                src="src/assets/fptlogo.png"
+                src="https://firebasestorage.googleapis.com/v0/b/exe-rag.appspot.com/o/fpt-chat%2Ffptlogo.png?alt=media&token=f4355cdc-02a7-4049-8bb1-2c2b7826aa00"
                 alt="ChatFPT"
                 className="logo"
               />
@@ -257,7 +257,7 @@ function App() {
                 onKeyPress={handleKeyPress}
               />
               <img
-                src="src/assets/input.png"
+                src="https://firebasestorage.googleapis.com/v0/b/exe-rag.appspot.com/o/fpt-chat%2Finput.png?alt=media&token=8378c692-dfe1-477f-8590-cf12790264c1"
                 alt="send icon"
                 className="send-icon"
                 onClick={handleSendClick}
@@ -270,7 +270,7 @@ function App() {
                 style={{ display: "none" }}
               />
               <img
-                src="src/assets/upload.png"
+                src="https://firebasestorage.googleapis.com/v0/b/exe-rag.appspot.com/o/fpt-chat%2Fupload.png?alt=media&token=cff19e1f-3f0f-4e31-82d3-f7664cff29ea"
                 alt="upload icon"
                 className="upload-icon"
                 onClick={() => document.getElementById("fileInput").click()}
