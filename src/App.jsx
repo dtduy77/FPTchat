@@ -84,7 +84,7 @@ function App() {
   const sendQuery = async (query) => {
     try {
       const response = await fetch(
-        `http://localhost:8000/api/v1/vectorstore/retrieve?query=${encodeURIComponent(
+        `https://duythduong-fpt-chat.hf.space/api/v1/vectorstore/retrieve?query=${encodeURIComponent(
           query
         )}`,
         {
@@ -114,7 +114,7 @@ function App() {
 
     try {
       const response = await fetch(
-        `http://localhost:8000/api/v1/vectorstore/retrieve?query=${encodeURIComponent(
+        `https://duythduong-fpt-chat.hf.space/api/v1/vectorstore/retrieve?query=${encodeURIComponent(
           buttonText
         )}`,
         {
