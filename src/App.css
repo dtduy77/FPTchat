@@ -1,18 +1,20 @@
+/* General Styles */
 html,
 body,
 #root {
   height: 100%;
   margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
+/* App Container */
 .App {
   display: flex;
   flex-direction: column;
   height: 100%;
-  font-family: Arial, sans-serif;
-  color: #000000;
 }
 
+/* Header Styles */
 .App-header {
   display: flex;
   justify-content: space-between;
@@ -23,9 +25,11 @@ body,
 
 h1 {
   font-size: 24px;
+  font-weight: bolder;
 }
+
 .logo {
-  height: 100px;
+  height: 55px;
 }
 
 .logo-container {
@@ -36,14 +40,17 @@ h1 {
 
 .auth-buttons {
   display: flex;
+  gap: 1rem;
 }
 
 .register-btn {
   background-color: transparent;
   color: #000;
   border: none;
+  border-radius: 5px;
   cursor: pointer;
   font-weight: bold;
+  padding: 0.5rem 1rem;
 }
 
 .login-btn {
@@ -52,56 +59,115 @@ h1 {
   cursor: pointer;
   border-radius: 20px;
   font-weight: bold;
+  border: none;
+  padding: 0.5rem 1rem;
 }
 
+/* Main Styles */
 .App-main {
+  margin-top: 5%;
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
   padding: 50px 50px;
+  background-color: #fff;
 }
 
 .App-main h1 {
   color: #4a4a4a;
-  font-size: 100px;
+  font-size: 70px;
   margin: auto;
-  padding-bottom: 200px;
+  padding-bottom: 250px;
 }
 
-.button-container {
+.App-main .chat-container {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
+  padding: 50px;
+  border-radius: 20px;
+  margin-bottom: 50px;
+}
+
+.App-main .question-container {
+  color: #000000;
+  font-size: 25px;
+  margin-left: 900px;
+  padding-bottom: 10px;
+}
+
+.App-main .response-container {
+  color: #000000;
+  font-size: 25px;
+  margin-left: 200px;
+  margin-right: 500px;
+}
+
+/* Bottom Container */
+.bottom-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Button Container */
+.button-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   gap: 10px;
-  margin-bottom: 20px;
+  justify-content: center;
+  margin-bottom: 2rem;
+  width: 100%;
+  max-width: 1000px;
 }
 
 .query-btn {
   color: #000000;
   background-color: #f3f5e8;
   border: none;
-  padding: 10px 20px;
+  padding: 0.75rem 2rem;
   cursor: pointer;
   border-radius: 20px;
-  font-size: 20px;
+  font-size: 1.5rem;
   font-weight: bold;
+  transition: background-color 0.3s ease;
 }
 
+.query-btn:hover {
+  background-color: #e6e6e6;
+}
+
+/* Input Container */
 .input-container {
   position: relative;
   width: 80%;
+  margin-bottom: 2rem;
+  max-width: 1000px;
 }
 
 .input-field {
   background-color: #f3f5e8;
   width: 100%;
-  padding: 10px;
+  padding: 15px;
   border-radius: 20px;
-  font-size: 20px;
+  font-size: 1.5rem;
   font-weight: bold;
-  padding-right: 40px; /* Add space for the icon */
+  padding-left: 50px; /* Add space for the upload icon */
+  padding-right: 50px; /* Add space for the send icon */
+  border: none;
+}
+
+.upload-icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 30px; /* Adjust the size of the icon */
+  cursor: pointer;
 }
 
 .send-icon {
@@ -111,4 +177,121 @@ h1 {
   transform: translateY(-50%);
   height: 40px; /* Adjust the size of the icon */
   cursor: pointer;
+}
+
+/* Sidebar Styles */
+.sidebar {
+  background-color: #f3f5e8;
+  height: 100vh;
+  padding-top: 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar .nav-link {
+  color: #ffffff;
+}
+
+.sidebar .nav-link.active {
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.col-md-10 {
+  background-color: #fff;
+  padding: 20px;
+}
+
+/* App.css */
+.sidebar {
+  display: flex; /* Sử dụng Flexbox để căn chỉnh nội dung */
+  justify-content: center; /* Căn giữa theo chiều ngang */
+  align-items: center; /* Căn giữa theo chiều dọc */
+  height: 100vh; /* Chiều cao của sidebar bằng chiều cao của viewport */
+
+  background-color: #f3f5e8; /* Màu nền của sidebar, bạn có thể thay đổi theo ý thích */
+}
+
+.sidebar-icon {
+  font-size: 45px; /* Kích thước của biểu tượng */
+  color: #4a4a4a; /* Màu sắc của biểu tượng, bạn có thể thay đổi theo ý thích */
+}
+
+/* Conversation History */
+.conversation-history {
+  width: 100%;
+  padding: 10px;
+}
+
+.conversation-summary {
+  padding: 10px;
+  background-color: #e6e6e6;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.conversation-summary:hover {
+  background-color: #ccc;
+}
+
+.history-details {
+  max-height: 400px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: #fff;
+}
+
+.conversation-entry {
+  margin-bottom: 10px;
+}
+
+.conversation-time {
+  font-size: 12px;
+  color: #888;
+}
+
+.conversation-question,
+.conversation-response {
+  font-size: 14px;
+  margin: 5px 0;
+}
+
+/* Upload Status Notification */
+.upload-status {
+  display: inline-block;
+  background-color: #e0f7fa;
+  border: 1px solid #00838f;
+  color: #006064;
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin: 20px auto; /* Centered horizontally with space from other elements */
+  text-align: center;
+  font-weight: bold;
+  position: relative; /* Changed from fixed to relative */
+  z-index: 999;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.upload-status.uploading {
+  background-color: #fff3e0;
+  border-color: #ff9800;
+  color: #e65100;
+}
+
+.upload-status.success {
+  background-color: #e8f5e9;
+  border-color: #66bb6a;
+  color: #2e7d32;
+}
+
+.upload-status.error {
+  background-color: #ffebee;
+  border-color: #e57373;
+  color: #c62828;
 }
