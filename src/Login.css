@@ -1,0 +1,123 @@
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    
+  }
+  
+  .login-box {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+  
+    text-align: center;
+    width: 70%;
+    max-width: 900px;
+  }
+  
+  .logo {
+ 
+    margin-bottom: 10px;
+  }
+  
+  h2 {
+    font-weight: bolder;
+    margin-bottom: 60px;
+  }
+  
+  .login-form-horizontal {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .email-login {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 40%;
+  }
+  
+
+  
+  .continue-btn {
+    background-color: #fb6507;
+    color: #fff;
+    font-weight: bolder;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    width: 100%;
+  }
+  
+  .separator-horizontal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 10%; /* Adjust width as needed */
+  }
+  
+  .separator-horizontal .line {
+    width: 1px;
+    height: 160px;
+    background-color: #ccc;
+  }
+  
+  .separator-horizontal span {
+    margin: 10px 0;
+    color: #888;
+    font-size: 14px;
+  }
+  
+  .social-login {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 40%;
+  }
+  
+  .social-btn {
+    display: flex;
+    align-items: center;
+    background-color: #f3f5e8;
+    color: #000;
+    font-weight: bolder;
+    border: none;
+    padding: 10px 20px;
+    margin-bottom: 10px;
+    border-radius: 25px;
+    cursor: pointer;
+    width: 100%;
+  }
+  
+  .social-btn i {
+    margin-right: 15px;
+  }
+  
+  .terms {
+    margin-top: 20px;
+    color: #000;
+    font-size: 14px;
+    font-weight: bolder;
+  }
+  
+  /* Add specific colors for each social media icon */
+  .google-icon {
+    color: #db4437; /* Google Red */
+  }
+  
+  .facebook-icon {
+    color: #4267B2; /* Facebook Blue */
+  }
+  
+  .microsoft-icon {
+    color: #00A4EF; /* Microsoft Blue */
+  }
+  
+  p {
+    font-weight: bolder;
+  }

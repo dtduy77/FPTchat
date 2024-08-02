@@ -1,6 +1,7 @@
 import "./App.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import { useState, useEffect } from "react";
+import { Link } from 'react-router-dom';
 
 function App() {
   const [inputValue, setInputValue] = useState("");
@@ -207,7 +208,7 @@ function App() {
             </div>
             <div className="auth-buttons">
               <button className="register-btn">Đăng kí</button>
-              <button className="login-btn">Đăng nhập</button>
+              <Link to="/login"><button className="login-btn">Đăng nhập</button></Link>
             </div>
           </header>
           <div className="App-main">
