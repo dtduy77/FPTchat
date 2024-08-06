@@ -37,7 +37,7 @@ function App() {
           (prev) => prev + (prev ? " " : "") + questionWords[questionIndex]
         );
         setQuestionIndex((prevIndex) => prevIndex + 1);
-      }, 100); // Adjust the speed as needed
+      }, 50); // Adjust the speed as needed
     } else if (
       questionWords.length > 0 &&
       questionIndex >= questionWords.length
@@ -49,7 +49,7 @@ function App() {
             (prev) => prev + (prev ? " " : "") + responseWords[responseIndex]
           );
           setResponseIndex((prevIndex) => prevIndex + 1);
-        }, 100); // Adjust the speed as needed
+        }, 50); // Adjust the speed as needed
       }
     }
 
@@ -355,7 +355,7 @@ function App() {
                 Khối đào tạo ngành học của FPT
               </button>
               <button className="query-btn" onClick={handleButtonClick}>
-                Cách tính điểm trung bình (GPA)
+                Cách tính điểm trung bình
               </button>
               <button className="query-btn" onClick={handleButtonClick}>
                 Địa chỉ đại học FPT Quy Nhơn
