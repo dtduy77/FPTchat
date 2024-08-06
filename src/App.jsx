@@ -1,7 +1,7 @@
 import "./App.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import { useState, useEffect } from "react";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 function App() {
   const [inputValue, setInputValue] = useState("");
@@ -85,7 +85,7 @@ function App() {
   const sendQuery = async (query) => {
     try {
       const response = await fetch(
-        `https://duythduong-fpt-chat.hf.space/api/v1/vectorstore/retrieve?query=${encodeURIComponent(
+        `https://duythduong-fpt-chat.hf.space/retrieve?query=${encodeURIComponent(
           query
         )}`,
         {
@@ -94,8 +94,9 @@ function App() {
       );
       const data = await response.json();
       console.log("Query Response:", data);
-      setResponseData(data.data); // Store the response data
-      updateConversationHistory(query, data.data);
+      const formattedResponse = replaceNewlinesWithBr(data.data);
+      setResponseData(formattedResponse);
+      updateConversationHistory(query, formattedResponse); // Store the response data with <br>
     } catch (error) {
       console.error("Error retrieving data:", error);
       // Handle the error
@@ -124,8 +125,9 @@ function App() {
       );
       const data = await response.json();
       console.log("Button Query Response:", data);
-      setResponseData(data.data); // Store the response data
-      updateConversationHistory(buttonText, data.data);
+      const formattedResponse = replaceNewlinesWithBr(data.data);
+      setResponseData(formattedResponse);
+      updateConversationHistory(buttonText, formattedResponse); // Store the response data with <br>
     } catch (error) {
       console.error("Error retrieving data:", error);
       // Handle the error
@@ -135,6 +137,56 @@ function App() {
   const updateConversationHistory = (question, response) => {
     const newEntry = { question, response, time: new Date() };
     setConversationHistory((prevHistory) => [...prevHistory, newEntry]);
+  };
+
+  const replaceNewlinesWithBr = (html) => {
+    // Regular expression to match <table> tags and their content
+    const tableRegex = /<table[^>]*>[\s\S]*?<\/table>/gi;
+    const tables = html.match(tableRegex) || [];
+
+    // Placeholder to store the separated parts
+    let plainTextParts = [];
+    let lastIndex = 0;
+
+    // Extract plain text parts and store them with their original indices
+    tables.forEach((table, index) => {
+      const tableIndex = html.indexOf(table, lastIndex);
+      if (tableIndex > lastIndex) {
+        plainTextParts.push({
+          text: html.substring(lastIndex, tableIndex),
+          index: lastIndex,
+        });
+      }
+      lastIndex = tableIndex + table.length;
+    });
+
+    // Add any remaining plain text after the last table
+    if (lastIndex < html.length) {
+      plainTextParts.push({
+        text: html.substring(lastIndex),
+        index: lastIndex,
+      });
+    }
+
+    // Replace newlines with <br> in plain text parts
+    plainTextParts = plainTextParts.map((part) => ({
+      ...part,
+      text: part.text.replace(/\n/g, "<br>"),
+    }));
+
+    // Reconstruct the HTML with the modified plain text and original tables
+    let reconstructedHtml = "";
+    lastIndex = 0;
+
+    plainTextParts.forEach((part) => {
+      reconstructedHtml += part.text;
+      if (lastIndex < tables.length) {
+        reconstructedHtml += tables[lastIndex];
+        lastIndex++;
+      }
+    });
+
+    return reconstructedHtml;
   };
 
   const formatTime = (date) => {
@@ -187,7 +239,10 @@ function App() {
                       <strong>Q:</strong> {entry.question}
                     </div>
                     <div className="conversation-response">
-                      <strong>A:</strong> {entry.response}
+                      <strong>A:</strong>{" "}
+                      <span
+                        dangerouslySetInnerHTML={{ __html: entry.response }}
+                      ></span>
                     </div>
                   </div>
                 ))}
@@ -208,7 +263,9 @@ function App() {
             </div>
             <div className="auth-buttons">
               <button className="register-btn">Đăng kí</button>
-              <Link to="/login"><button className="login-btn">Đăng nhập</button></Link>
+              <Link to="/login">
+                <button className="login-btn">Đăng nhập</button>
+              </Link>
             </div>
           </header>
           <div className="App-main">
@@ -223,7 +280,7 @@ function App() {
               )}
               {responseData && (
                 <div className="response-container">
-                  <p>{responseData}</p>
+                  <p dangerouslySetInnerHTML={{ __html: responseData }}></p>
                 </div>
               )}
             </div>
@@ -239,7 +296,7 @@ function App() {
                 Khối đào tạo ngành học của FPT
               </button>
               <button className="query-btn" onClick={handleButtonClick}>
-                Cách tính điểm GPA
+                Cách tính điểm trung bình (GPA)
               </button>
               <button className="query-btn" onClick={handleButtonClick}>
                 Địa chỉ đại học FPT Quy Nhơn
