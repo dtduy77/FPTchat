@@ -85,7 +85,7 @@ function App() {
   const sendQuery = async (query) => {
     try {
       const response = await fetch(
-        `https://duythduong-fpt-chat.hf.space/retrieve?query=${encodeURIComponent(
+        `https://duythduong-fpt-chat.hf.space/api/v1/vectorstore/retrieve?query=${encodeURIComponent(
           query
         )}`,
         {
