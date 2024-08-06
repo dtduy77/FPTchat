@@ -14,11 +14,50 @@ function App() {
   const [uploadStatus, setUploadStatus] = useState(null);
   const [uploadMessage, setUploadMessage] = useState("");
 
+  const [displayedQuestion, setDisplayedQuestion] = useState("");
+  const [displayedResponse, setDisplayedResponse] = useState("");
+  const [questionWords, setQuestionWords] = useState([]);
+  const [responseWords, setResponseWords] = useState([]);
+  const [questionIndex, setQuestionIndex] = useState(0);
+  const [responseIndex, setResponseIndex] = useState(0);
+
   useEffect(() => {
     if (conversationHistory.length === 0) {
       setStartTime(new Date());
     }
   }, [conversationHistory]);
+
+  useEffect(() => {
+    let questionTimer;
+    let responseTimer;
+
+    if (questionWords.length > 0 && questionIndex < questionWords.length) {
+      questionTimer = setInterval(() => {
+        setDisplayedQuestion(
+          (prev) => prev + (prev ? " " : "") + questionWords[questionIndex]
+        );
+        setQuestionIndex((prevIndex) => prevIndex + 1);
+      }, 100); // Adjust the speed as needed
+    } else if (
+      questionWords.length > 0 &&
+      questionIndex >= questionWords.length
+    ) {
+      clearInterval(questionTimer);
+      if (responseWords.length > 0 && responseIndex < responseWords.length) {
+        responseTimer = setInterval(() => {
+          setDisplayedResponse(
+            (prev) => prev + (prev ? " " : "") + responseWords[responseIndex]
+          );
+          setResponseIndex((prevIndex) => prevIndex + 1);
+        }, 100); // Adjust the speed as needed
+      }
+    }
+
+    return () => {
+      clearInterval(questionTimer);
+      clearInterval(responseTimer);
+    };
+  }, [questionWords, responseWords, questionIndex, responseIndex]);
 
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
@@ -77,6 +116,13 @@ function App() {
 
     const currentQuestion = inputValue;
     setQuestion(currentQuestion);
+    setResponseData(null); // Clear the previous response
+    setDisplayedQuestion(""); // Clear the displayed question
+    setDisplayedResponse(""); // Clear the displayed response
+    setQuestionWords(currentQuestion.split(" "));
+    setResponseWords([]); // Clear response words initially
+    setQuestionIndex(0);
+    setResponseIndex(0);
     setInputValue(""); // Clear the input field immediately
 
     await sendQuery(currentQuestion);
@@ -95,6 +141,8 @@ function App() {
       const data = await response.json();
       console.log("Query Response:", data);
       const formattedResponse = replaceNewlinesWithBr(data.data);
+      setResponseWords(formattedResponse.split(" "));
+      setResponseIndex(0);
       setResponseData(formattedResponse);
       updateConversationHistory(query, formattedResponse); // Store the response data with <br>
     } catch (error) {
@@ -113,6 +161,13 @@ function App() {
     const buttonText = event.target.textContent;
     console.log("Button text:", buttonText);
     setQuestion(buttonText);
+    setResponseData(null); // Clear the previous response
+    setDisplayedQuestion(""); // Clear the displayed question
+    setDisplayedResponse(""); // Clear the displayed response
+    setQuestionWords(buttonText.split(" "));
+    setResponseWords([]); // Clear response words initially
+    setQuestionIndex(0);
+    setResponseIndex(0);
 
     try {
       const response = await fetch(
@@ -126,6 +181,8 @@ function App() {
       const data = await response.json();
       console.log("Button Query Response:", data);
       const formattedResponse = replaceNewlinesWithBr(data.data);
+      setResponseWords(formattedResponse.split(" "));
+      setResponseIndex(0);
       setResponseData(formattedResponse);
       updateConversationHistory(buttonText, formattedResponse); // Store the response data with <br>
     } catch (error) {
@@ -273,14 +330,16 @@ function App() {
               {!responseData && !question && (
                 <h1>Bạn đang thắc mắc điều gì?</h1>
               )}
-              {question && (
+              {displayedQuestion && (
                 <div className="question-container">
-                  <p>{question}</p>
+                  <p>{displayedQuestion}</p>
                 </div>
               )}
-              {responseData && (
+              {displayedResponse && (
                 <div className="response-container">
-                  <p dangerouslySetInnerHTML={{ __html: responseData }}></p>
+                  <p
+                    dangerouslySetInnerHTML={{ __html: displayedResponse }}
+                  ></p>
                 </div>
               )}
             </div>
